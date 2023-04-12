@@ -7,6 +7,7 @@ import {
 } from "react";
 import { useNavigate } from "react-router-dom";
 import { timeFormat } from "../utils/timeFormat";
+import { saveToLocalStorage } from "../utils/saveToLocalStorage";
 
 interface TasksContextProviderProps {
   children: ReactNode;
@@ -77,7 +78,7 @@ export const TasksProvider = ({ children }: TasksContextProviderProps) => {
     );
 
     setTasks(filteredTasks);
-    localStorage.setItem("@logwe:tasks", JSON.stringify(filteredTasks));
+    saveToLocalStorage("@logwe:tasks", filteredTasks);
   };
 
   const handleEditCurrentSelectedTask = (
@@ -104,11 +105,8 @@ export const TasksProvider = ({ children }: TasksContextProviderProps) => {
 
     setTasks(editedTask);
 
-    localStorage.setItem("@logwe:tasks", JSON.stringify(editedTask));
-    localStorage.setItem(
-      "@logwe:currentTask",
-      JSON.stringify(editedCurrentTask)
-    );
+    saveToLocalStorage("@logwe:tasks", editedTask);
+    saveToLocalStorage("@logwe:currentTask", editedCurrentTask);
   };
 
   const handleSelectTask = (id: number) => {
@@ -118,7 +116,7 @@ export const TasksProvider = ({ children }: TasksContextProviderProps) => {
 
     setCurrentTask(current);
 
-    localStorage.setItem("@logwe:currentTask", JSON.stringify(current));
+    saveToLocalStorage("@logwe:currentTask", current);
   };
 
   const handleCreateTask = (title: string, description: string) => {
@@ -132,23 +130,13 @@ export const TasksProvider = ({ children }: TasksContextProviderProps) => {
       status: "pending"
     };
 
-    setTasks((state) => [...state, newTask]);
+    const newTasks = [...tasks, newTask];
+
+    setTasks(newTasks);
 
     setCurrentTask(newTask);
 
-    localStorage.setItem(
-      "@logwe:tasks",
-      JSON.stringify([
-        ...tasks,
-        {
-          title,
-          description,
-          id: Math.floor(Math.random() * 100),
-          creationDate: timeFormat(new Date()),
-          status: "pending"
-        }
-      ])
-    );
+    saveToLocalStorage("@logwe:tasks", newTasks);
 
     navigate("/task");
 
@@ -161,7 +149,7 @@ export const TasksProvider = ({ children }: TasksContextProviderProps) => {
 
     setTasks(filteredtasks);
 
-    localStorage.setItem("@logwe:tasks", JSON.stringify(filteredtasks));
+    saveToLocalStorage("@logwe:tasks", filteredtasks);
   };
 
   const handleTaskTitle = (event: {
