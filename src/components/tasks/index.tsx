@@ -12,7 +12,7 @@ export const Tasks = () => {
       <TaskInput />
 
       <div className=" mx-auto my-16">
-        <div className="pb-4 flex items-center justify-between">
+        <div className="flex-col pb-4 flex items-start gap-4 justify-between sm:flex-row sm:items-center">
           <p className="text-blue-500 font-black text-xl">
             Tarefas criadas{" "}
             <span className="text-gray-300 bg-gray-600 rounded-full px-2 py-0.5">
