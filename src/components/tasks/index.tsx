@@ -13,13 +13,13 @@ export const Tasks = () => {
 
       <div className=" mx-auto my-16">
         <div className="flex-col pb-4 flex items-start gap-4 justify-between sm:flex-row sm:items-center">
-          <p className="text-blue-500 font-black text-xl">
+          <p className="text-blue-500  text-xl">
             Tarefas criadas{" "}
             <span className="text-gray-300 bg-gray-600 rounded-full px-2 py-0.5">
               {tasks.length}
             </span>
           </p>
-          <p className="text-purple-400 font-black text-xl">
+          <p className="text-purple-400 text-xl">
             Concluidas{" "}
             <span className="text-gray-100 bg-gray-600 rounded-full px-2 py-0.5">
               {tasks.filter((item: any) => item.status === "done").length} de{" "}

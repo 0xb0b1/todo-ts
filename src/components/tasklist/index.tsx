@@ -3,6 +3,8 @@ import { useTasks } from "../../contexts/TaskContext";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import { motion } from "framer-motion";
+
 export const TaskList = () => {
   const { tasks, handleRemoveTask, handleSelectTask, handleToggleTaskStatus } =
     useTasks();
@@ -71,7 +73,7 @@ export const TaskList = () => {
                 </span>
                 <Link to="/task" onClick={() => handleSelectTask(task.id)}>
                   <h2
-                    className={`text-gray-200 font-semibold text-2xl ${
+                    className={`text-gray-200  text-2xl ${
                       task.status === "done" ? "line-through" : ""
                     }`}
                   >
@@ -86,9 +88,7 @@ export const TaskList = () => {
 
               <div className="flex gap-4 items-center">
                 {taskByStatusButton[task.status]}
-                <span className="text-gray-300 font-bold">
-                  {task.creationDate}
-                </span>
+                <span className="text-gray-300 ">{task.creationDate}</span>
               </div>
             </div>
             <div className="w-12 absolute right-0 top-4 flex flex-col gap-4">
