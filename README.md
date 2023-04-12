@@ -11,7 +11,7 @@
 
 * **Listar tarefas**: A página inicial deve exibir uma lista com todas as tarefas cadastradas, ordenadas pela data de criação. Cada item da lista deve exibir o título, a descrição e a data de criação da tarefa. Além disso, deve ser possível filtrar as tarefas por status (pendente, em andamento ou concluída).
 
-* **Editar tarefa**: O usuário deve ser capaz de editar o título e a descrição de uma tarefa já existente.
+- [x] **Editar tarefa**: O usuário deve ser capaz de editar o título e a descrição de uma tarefa já existente.
 
 * **Remover tarefa**: O usuário deve ser capaz de remover uma tarefa.
 
