@@ -3,166 +3,166 @@ import {
   SetStateAction,
   createContext,
   useContext,
-  useState
-} from "react";
-import { useNavigate } from "react-router-dom";
-import { timeFormat } from "../utils/timeFormat";
-import { saveToLocalStorage } from "../utils/saveToLocalStorage";
+  useState,
+} from 'react'
+import { useNavigate } from 'react-router-dom'
+import { timeFormat } from '../utils/timeFormat'
+import { saveToLocalStorage } from '../utils/saveToLocalStorage'
 
 interface TasksContextProviderProps {
-  children: ReactNode;
+  children: ReactNode
 }
 
-type TaskStatus = "pending" | "in progress" | "done";
+type TaskStatus = 'pending' | 'in progress' | 'done'
 
 interface Task {
-  title: string;
-  description: string;
-  id: number;
-  creationDate: string;
-  status: TaskStatus;
+  title: string
+  description: string
+  id: number
+  creationDate: string
+  status: TaskStatus
 }
 
 interface TasksContextProps {
-  tasks: Task[];
-  currentTask: Task;
-  newTaskTitle: string;
-  newTaskDescription: string;
-  handleRemoveTask: (id: number) => void;
-  handleSelectTask: (id: number) => void;
-  handleToggleTaskStatus: (task: Task) => void;
-  handleCreateTask: (title: string, description: string) => void;
-  handleEditCurrentSelectedTask: (title: string, description: string) => void;
+  tasks: Task[]
+  currentTask: Task
+  newTaskTitle: string
+  newTaskDescription: string
+  handleRemoveTask: (id: number) => void
+  handleSelectTask: (id: number) => void
+  handleToggleTaskStatus: (task: Task) => void
+  handleCreateTask: (title: string, description: string) => void
+  handleEditCurrentSelectedTask: (title: string, description: string) => void
   handleTaskTitle: (event: {
-    target: { value: SetStateAction<string> };
-  }) => void;
+    target: { value: SetStateAction<string> }
+  }) => void
   handleTaskDescription: (event: {
-    target: { value: SetStateAction<string> };
-  }) => void;
+    target: { value: SetStateAction<string> }
+  }) => void
 }
 
-export const TasksContext = createContext({} as TasksContextProps);
+export const TasksContext = createContext({} as TasksContextProps)
 
 export const TasksProvider = ({ children }: TasksContextProviderProps) => {
   const [tasks, setTasks] = useState<Task[]>(() => {
-    const taskStorage = localStorage.getItem("@logwe:tasks");
+    const taskStorage = localStorage.getItem('@logwe:tasks')
 
-    if (taskStorage) return JSON.parse(taskStorage);
+    if (taskStorage) return JSON.parse(taskStorage)
 
-    return [];
-  });
+    return []
+  })
 
   const [currentTask, setCurrentTask] = useState<Task>(() => {
-    const currentTaskStorage = localStorage.getItem("@logwe:currentTask");
+    const currentTaskStorage = localStorage.getItem('@logwe:currentTask')
 
-    if (currentTaskStorage) return JSON.parse(currentTaskStorage);
+    if (currentTaskStorage) return JSON.parse(currentTaskStorage)
 
-    return [];
-  });
+    return []
+  })
 
-  const [newTaskTitle, setNewTaskTitle] = useState<string>("");
-  const [newTaskDescription, setNewTaskDescription] = useState<string>("");
+  const [newTaskTitle, setNewTaskTitle] = useState<string>('')
+  const [newTaskDescription, setNewTaskDescription] = useState<string>('')
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleToggleTaskStatus = (task: Task) => {
-    const nextStatus = task.status === "pending" ? "in progress" : "done";
+    const nextStatus = task.status === 'pending' ? 'in progress' : 'done'
 
     const filteredTasks: Task[] = tasks.map((item) =>
       item.id === task.id
         ? {
             ...item,
-            status: nextStatus
+            status: nextStatus,
           }
-        : item
-    );
+        : item,
+    )
 
-    setTasks(filteredTasks);
-    saveToLocalStorage("@logwe:tasks", filteredTasks);
-  };
+    setTasks(filteredTasks)
+    saveToLocalStorage('@logwe:tasks', filteredTasks)
+  }
 
   const handleEditCurrentSelectedTask = (
     title: string,
-    description: string
+    description: string,
   ) => {
     const editedTask = tasks.map((task) =>
       task.id === currentTask.id
         ? {
             ...task,
             title,
-            description
+            description,
           }
-        : task
-    );
+        : task,
+    )
 
     const editedCurrentTask = {
       ...currentTask,
       title,
-      description
-    };
+      description,
+    }
 
-    setCurrentTask(editedCurrentTask);
+    setCurrentTask(editedCurrentTask)
 
-    setTasks(editedTask);
+    setTasks(editedTask)
 
-    saveToLocalStorage("@logwe:tasks", editedTask);
-    saveToLocalStorage("@logwe:currentTask", editedCurrentTask);
-  };
+    saveToLocalStorage('@logwe:tasks', editedTask)
+    saveToLocalStorage('@logwe:currentTask', editedCurrentTask)
+  }
 
   const handleSelectTask = (id: number) => {
-    if (!id) return;
+    if (!id) return
 
-    const current: any = tasks.find((task) => task.id === id);
+    const current: any = tasks.find((task) => task.id === id)
 
-    setCurrentTask(current);
+    setCurrentTask(current)
 
-    saveToLocalStorage("@logwe:currentTask", current);
-  };
+    saveToLocalStorage('@logwe:currentTask', current)
+  }
 
   const handleCreateTask = (title: string, description: string) => {
-    if (title.length === 0 || description.length == 0) return;
+    if (title.length === 0 || description.length == 0) return
 
     const newTask: any = {
       title,
       description,
       id: Math.floor(Math.random() * 100),
       creationDate: timeFormat(new Date()),
-      status: "pending"
-    };
+      status: 'pending',
+    }
 
-    const newTasks = [...tasks, newTask];
+    const newTasks = [...tasks, newTask]
 
-    setTasks(newTasks);
+    setTasks(newTasks)
 
-    setCurrentTask(newTask);
+    setCurrentTask(newTask)
 
-    saveToLocalStorage("@logwe:tasks", newTasks);
+    saveToLocalStorage('@logwe:tasks', newTasks)
 
-    navigate("/task");
+    navigate('/task')
 
-    setNewTaskTitle("");
-    setNewTaskDescription("");
-  };
+    setNewTaskTitle('')
+    setNewTaskDescription('')
+  }
 
   const handleRemoveTask = (id: number) => {
-    const filteredtasks = tasks.filter((task) => task.id !== id);
+    const filteredtasks = tasks.filter((task) => task.id !== id)
 
-    setTasks(filteredtasks);
+    setTasks(filteredtasks)
 
-    saveToLocalStorage("@logwe:tasks", filteredtasks);
-  };
+    saveToLocalStorage('@logwe:tasks', filteredtasks)
+  }
 
   const handleTaskTitle = (event: {
-    target: { value: SetStateAction<string> };
+    target: { value: SetStateAction<string> }
   }) => {
-    setNewTaskTitle(event.target.value);
-  };
+    setNewTaskTitle(event.target.value)
+  }
 
   const handleTaskDescription = (event: {
-    target: { value: SetStateAction<string> };
+    target: { value: SetStateAction<string> }
   }) => {
-    setNewTaskDescription(event.target.value);
-  };
+    setNewTaskDescription(event.target.value)
+  }
 
   return (
     <TasksContext.Provider
@@ -177,16 +177,16 @@ export const TasksProvider = ({ children }: TasksContextProviderProps) => {
         handleTaskDescription,
         handleCreateTask,
         handleRemoveTask,
-        handleToggleTaskStatus
+        handleToggleTaskStatus,
       }}
     >
       {children}
     </TasksContext.Provider>
-  );
-};
+  )
+}
 
 export const useTasks = () => {
-  const context = useContext(TasksContext);
+  const context = useContext(TasksContext)
 
-  return context;
-};
+  return context
+}
