@@ -20,7 +20,7 @@
 ## 🛠️ Tecnologias/Ferramentas ultilizadas
 
 * [React](https://react.dev/)
-* [React ContextAPI)(https://react.dev/learn/scaling-up-with-reducer-and-context)
+* [React ContextAPI](https://react.dev/learn/scaling-up-with-reducer-and-context)
 * [Typescript](https://www.typescriptlang.org/)
 * [Vite](https://vitejs.dev/)
 * [TailwindCSS](https://tailwindcss.com/)
