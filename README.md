@@ -33,12 +33,12 @@
 ## ⚙️ Instalação
 ```
 # Faça clone do projeto utilizando a CLI 
-$ git clone https://github.com/0xb0b1/lognature-challenge.git
+$ git clone https://github.com/0xb0b1/todo-ts.git
 ```
 
 ```
 # Acesse a pasta da aplicação
-$ dev lognature-challenge
+$ cd todo-ts
 
 # Instalando as dependências
 $ yarn
