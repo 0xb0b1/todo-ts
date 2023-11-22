@@ -53,6 +53,6 @@ $ yarn dev
 ### 🔗 Link para o projeto online
 
 
-[to-do list](https://lognature-challenge.vercel.app/)
+[to-do list](https://todo-ts-pv.vercel.app/)
 
 &nbsp;
